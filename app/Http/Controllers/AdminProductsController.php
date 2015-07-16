@@ -23,4 +23,24 @@ class AdminProductsController extends Controller
         $products = $this->products->all();
         return view('admin.products', compact('products'));
     }
+    
+    public function create(){
+        return "oi";
+    }
+    
+    public function store(){
+        return "oi";
+    }
+    
+    public function edit($id){
+        return "oi";
+    }
+    
+    public function update($id){
+        return "oi";
+    }
+    
+    public function destroy($id){ 
+        return "oi";
+    }
 }

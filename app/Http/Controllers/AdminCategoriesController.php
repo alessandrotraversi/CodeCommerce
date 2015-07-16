@@ -20,4 +20,24 @@ class AdminCategoriesController extends Controller
         $categories = $this->categories->all();
         return view('admin.categories', compact('categories'));
     }
+    
+    public function create(){
+        return "oi";
+    }
+    
+    public function store(){
+        return "oi";
+    }
+    
+    public function edit($id){
+        return "oi";
+    }
+    
+    public function update($id){
+        return "oi";
+    }
+    
+    public function destroy($id){ 
+        return "oi";
+    }
 }

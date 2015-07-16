@@ -11,6 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get('/', 'WelcomeController@index' );
+
+
+Route::group(['prefix'=>'admin'], function(){
+    Route::get('/categories', ['as'=>'admin.categories', 'uses'=>'AdminCategoriesController@index']);
+    Route::get('/products', ['as'=>'admin.products', 'uses'=>'AdminProductsController@index']);
 });
+
+
+

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use CodeCommerce\Category;
 use CodeCommerce\Http\Requests;
 use CodeCommerce\Http\Controllers\Controller;
+use CodeCommerce\Http\Requests\CategoryRequest;
 
 class AdminCategoriesController extends Controller
 {    
@@ -17,27 +18,31 @@ class AdminCategoriesController extends Controller
     }
     
     public function index(){
-        $categories = $this->categories->all();
-        return view('admin.categories', compact('categories'));
+        $categories = $this->categories->paginate(5);
+        return view('admin.categories.index', compact('categories'));
     }
     
     public function create(){
-        return "oi";
+        return view('admin.categories.create');
     }
     
-    public function store(){
-        return "oi";
+    public function store(CategoryRequest $request){
+        $this->categories->create($request->all());
+        return redirect()->route('a.c.index');
     }
     
     public function edit($id){
-        return "oi";
+        $category = $this->categories->find($id);
+        return view('admin.categories.edit', compact('category'));
     }
     
-    public function update($id){
-        return "oi";
+    public function update($id, CategoryRequest $request){
+        $this->categories->find($id)->update($request->all());
+        return redirect()->route('a.c.index');
     }
     
     public function destroy($id){ 
-        return "oi";
+        $this->categories->find($id)->delete();
+        return redirect()->route('a.c.index');
     }
 }

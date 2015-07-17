@@ -143,6 +143,10 @@ return [
         CodeCommerce\Providers\AppServiceProvider::class,
         CodeCommerce\Providers\EventServiceProvider::class,
         CodeCommerce\Providers\RouteServiceProvider::class,
+        Illuminate\Html\HtmlServiceProvider::class,
+
+
+
 
     ],
 
@@ -191,7 +195,8 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-
+        'Form'      => Illuminate\Html\FormFacade::class,
+        'Html'      => Illuminate\Html\HtmlFacade::class,
     ],
 
 ];

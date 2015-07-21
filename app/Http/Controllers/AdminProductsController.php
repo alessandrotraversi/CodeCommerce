@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //importa
 use CodeCommerce\Product;
+use CodeCommerce\Category;
 use CodeCommerce\Http\Controllers\Controller;
 use CodeCommerce\Http\Requests\ProductRequest;
 
@@ -23,8 +24,11 @@ class AdminProductsController extends Controller
         return view('admin.products.index', compact('products'));
     }
     
-    public function create(){
-        return view('admin.products.create');
+    public function create(Category $category){
+        
+        $categories = $category->lists('name', 'id');
+        
+        return view('admin.products.create', compact('categories'));
     }
     
     public function store(ProductRequest $request){

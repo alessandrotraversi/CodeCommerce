@@ -15,6 +15,11 @@
 
 {!! Form::model($product, ['route'=>['a.p.update', $product->id], 'method'=>'put']) !!}
 
+    <div class="form-group">
+     {!! Form::label('category','Category:') !!}
+     {!! Form::select('category_id', $categories, $product->category->id, ['class'=>'form-control']) !!}
+    </div>
+
     @include('admin.products._form')
      
      <div class="form-group">

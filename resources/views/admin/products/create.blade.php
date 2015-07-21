@@ -15,6 +15,11 @@
 
 {!! Form::open(['route'=>'a.p.store', 'method'=>'post']) !!}
 
+    <div class="form-group">
+     {!! Form::label('category','Category:') !!}
+     {!! Form::select('category_id', $categories, null , ['class'=>'form-control']) !!}
+    </div>
+
      @include('admin.products._form')
      
      <div class="form-group">

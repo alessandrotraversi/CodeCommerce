@@ -15,9 +15,7 @@
 Route::get('/', 'WelcomeController@index' );
 
 
-Route::group(['prefix'=>'admin'], function(){
-    
-    Route::pattern('id', '[1-5]');
+Route::group(['prefix'=>'admin', 'where'=>['id' => '[1-9]+']], function(){
     
     Route::group(['prefix'=>'categories'], function(){
         Route::get('',['as'=>'a.c.index', 'uses'=>'AdminCategoriesController@index']);

@@ -23,8 +23,8 @@ class ProductRequest extends Request
      */
     public function rules()
     {
-        //$this->merge(['featured'=>$this->input('featured', 1)]);
-        //$this->merge(['recommend'=>$this->input('recommend', 1)]);
+        $this->merge(['featured'=>$this->input('featured', 1)]);
+        $this->merge(['recommend'=>$this->input('recommend', 1)]);
         
         return [
             'name'=>'required',

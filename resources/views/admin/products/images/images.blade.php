@@ -5,7 +5,7 @@
 @section('content')
 <h1>Sezione amministrativa {{ $product->name }}</h1>
 
-<a href="{{ route('a.p.i.create') }}" class="btn btn-success">Crea nuova immagine</a><br /><br />
+<a href="{{ route('a.p.i.create', ['id'=>$product->id]) }}" class="btn btn-success">Crea nuova immagine</a><br /><br />
  
 <table class="table">
      <tr>

@@ -12,6 +12,7 @@ use CodeCommerce\Category;
 use CodeCommerce\ProductImage;
 use CodeCommerce\Http\Controllers\Controller;
 use CodeCommerce\Http\Requests\ProductRequest;
+use CodeCommerce\Http\Requests\ProductImageRequest;
 
 
 class AdminProductsController extends Controller
@@ -62,7 +63,7 @@ class AdminProductsController extends Controller
         return view('admin.products.images.create_image', compact('product'));
     }
     
-    public function storeImage(Request $request, $id, ProductImage $productImage){
+    public function storeImage(ProductImageRequest $request, $id, ProductImage $productImage){
         $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
         

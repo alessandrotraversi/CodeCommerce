@@ -25,6 +25,7 @@
          <td>{{$product->category->name}}</td>
          <td>
              <a href="{{route('a.p.edit',['id'=>$product->id])}}" class="btn btn-default">Modifica</a>
+             <a href="{{route('a.p.i.index',['id'=>$product->id])}}" class="btn btn-default">Immagine</a>
              <a href="{{route('a.p.destroy',['id'=>$product->id])}}" class="btn btn-danger">Cancella</a>
          </td>
      </tr>

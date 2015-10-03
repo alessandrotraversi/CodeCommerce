@@ -40,7 +40,7 @@ class AdminProductsController extends Controller
     
     public function edit($id){
         $product = $this->products->find($id);
-        return view('admin.products.edit', compact('product'));
+        return view('admin.products.edit', compact('product, categories'));
     }
     
     public function update($id, ProductRequest $request){
@@ -48,9 +48,22 @@ class AdminProductsController extends Controller
         return redirect()->route('a.p.index');
     }
     
-    public function destroy($id){ 
-        $this->products->find($id)->delete();
-        return redirect()->route('a.p.index');
+    public function destroy($id){         
+        $product = $this->products->find($id);
+        
+        if($product){
+            if($product->images){
+                foreach($product->images as $image){
+                    if(file_exists(public_path().'/uploads/'.$image->id.'.'.$image->extension)){
+                        Storage::disk('public_local')->delete($image->id.'.'.$image->extension);
+                    }
+                    $image->delete();
+                }
+            }
+            $product->delete();
+            return redirect()->route('a.p.index');
+        }
+        return redirect()->route('a.p.index');   
     }
     
     public function images($id){

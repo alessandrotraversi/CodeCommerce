@@ -15,6 +15,12 @@
 
 {!! Form::open(['route'=>'a.c.store', 'method'=>'post']) !!}
 
+    <div class="form-group ">
+    {!! Form::label('tags', 'Tag:') !!}
+    {!! Form::text('tags', $tags, ['class' => 'form-control']) !!}
+
+    </div>
+
      @include('admin.categories._form')
      
      <div class="form-group">

@@ -21,4 +21,4 @@
 <div class="checkbox">
      {!! Form::label('recommend','Recommend:') !!}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      {!! Form::checkbox('recommend', '1', false) !!}
- </div>
+</div>

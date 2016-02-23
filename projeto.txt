@@ -1,0 +1,163 @@
+***************************************************************************************
+*************************1º Etapa. Instalando e versionando
+***************************************************************************************
+
+Nessa primeira fase do projeto, você deverá instalar o Laravel, mudar o namespace padrão da aplicação para CodeCommerce e versionar todos os arquivos criados no Git.
+Não esqueça de testar a aplicação rodando o comando: php artisan serve
+
+
+***************************************************************************************
+*************************2º Etapa. Criando os primeiros Models
+***************************************************************************************
+
+Nessa fase do projeto, você deverá criar 2 models:
+
+Category
+name - varchar(80)
+description - text
+Product
+name - varchar(80)
+description - text
+price - decimal
+Todos esses campos apresentados devem ser utilizados como Mass Assigment.
+
+Registre 2 rotas:
+
+- admin/categories: Deve apontar para o controller AdminCategoriesController e para action index
+
+- admin/products: Deve apontar para o controller AdminProductsController e para action index
+
+Quando o usuário acessar qualquer uma dessas rotas, ele deverá acessar a listagem dos registros do model correspondente.
+
+
+***************************************************************************************
+*************************3º Etapa. Criação das rotas
+***************************************************************************************
+
+Agora que você já possui os dois models criados, crie as rotas necessárias para que possamos realizar um CRUD em cada model.
+
+Para facilitar a administração do arquivo de rotas, as mesmas deverão ser totalmente agrupadas pelo prefixo: admin e pelo seu próprio model.
+
+Exemplo: admin/products, admin/categories
+
+OBS: Enquanto nem todos os controllers e actions ainda não estão definidos, aponte as rotas para um controller e action qualquer.
+
+OBS 2: Todas as rotas devem possuir nome e seus parâmetros devem ser validados.
+
+
+***************************************************************************************
+*************************4º Etapa. Seeding
+***************************************************************************************
+
+Nessa fase, você deverá adicionar dados Fakes nas seguintes entidades:
+
+- User
+
+- Category
+
+- Product
+
+
+***************************************************************************************
+*************************5º Etapa. Relacionando
+***************************************************************************************
+
+Essa fase do projeto é bem simples.
+
+Você apenas deverá criar o relacionamento entre os Models, exatamente como fiz nesse capítulo.
+
+Também, você deverá implementar a paginação em todos os CRUDs.
+
+OBS: Não se esqueça de checar se suas rotas estão seguindo o mesmo padrão que estou utilizando.
+
+Boa sorte!
+
+
+
+***************************************************************************************
+*************************6º Etapa. Upload de Imagens
+***************************************************************************************
+
+Essa etapa é bastante simples.
+
+Você simplesmente precisa repetir exatamente o processo de cadastro de imagens de produtos com upload.
+
+Por outro lado, gostaria que você também testasse o processo de upload utilizando a Amazon S3. Ok?
+
+
+***************************************************************************************
+*************************7º Etapa. Tags
+***************************************************************************************
+
+Agora que você já aprendeu a trabalhar com relacionamentos ManyToMany, adicione ao formulário de
+Criação / Edicação de produtos, a opção de setar tags para determinado produto em um textarea (entre vírgulas).
+
+Obs.: Uma tag já adicionada na tabela de tags não pode ter o registro repetido, ou seja, não pode
+ter duas categorias "notebooks" na tabela tags.
+
+***************************************************************************************
+*************************8º Etapa. Loja
+***************************************************************************************
+
+Agora que você já possui a base para gerar a home da Loja, você precisa:
+
+- Listar os produtos em desta
+- Listar os produtos recomendados
+
+Quando clicarmos em um item da categoria, deveremos exibir apenas os produtos de uma determinada categoria.
+
+***************************************************************************************
+*************************9º Etapa. Assets
+***************************************************************************************
+
+Repita exatamente o aprendido nesse capítulo para que você possa gerenciar seus assets utilizando o Elixir.
+
+***************************************************************************************
+*************************10º Etapa. Produtos com tags
+***************************************************************************************
+
+Nessa fase do projeto, você deverá repetir exatamente o que você aprendeu nessa capitulo.
+Também deverá exibir as tags de um determinado produto, no momento da exibição do mesmo na loja.
+Cada tag deverá ter um link que, quando clicado deverá encaminhar o usuário para a página onde temos a listagem
+de todos os produtos associados a tag correspondente.
+
+
+***************************************************************************************
+*************************11º Etapa. Cart
+***************************************************************************************
+
+Nessa fase do projeto, você deverá criar o carrinho de compras como demonstrado, porém, no próprio carrinho,
+você deverá adicionar uma opção para que possamos alterar a quantidade de um determinado produto.
+
+Fique livre para utilizar javascript (ou não), para que possamos realizar uma requisição de atualização no
+carrinho em relação a quantidade de um produto.
+
+
+***************************************************************************************
+*************************12º Etapa. Orders e Auth
+***************************************************************************************
+
+Nessa fase do projeto, você terá de deixar o sistema totalmente preparado para gerar as
+ordens de serviços (Order e OrderItem) apenas para os usuários logados que tenham itens no carrinho de compra.
+
+Quando o usuário clicar em fechar carrinho, a ordem de serviço deve ser gerada automaticamente.
+
+Caso o usuário não esteja logado, redirecione-o para a página de login antes do mesmo finalizar o pedido.
+
+Também você deverá adicionar um novo campo na tabela de usuários chamado: is_admin (boolean).
+
+A partir de agora, apenas usuários logados e com is_admin=1 poderão acessar a área administrativa de nossa loja.
+
+
+***************************************************************************************
+*************************13º Etapa. Checkout
+***************************************************************************************
+
+Agora que você já aprendeu a realizar o processo de checkout, realize as seguintes tarefas:
+
+- No momento do registro de um novo usuário, crie os campos adicionais para que seu endereço completo seja preenchido.
+
+- Na listagem de pedidos contratados pelo usuário, traga o status correto ao invés de trabalharmos com os números inteiros.
+
+- Crie na área administrativa uma página com a listagem de todos os pedidos realizados e a possibilidade de
+editar o status dos mesmos.

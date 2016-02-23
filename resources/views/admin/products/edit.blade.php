@@ -21,6 +21,11 @@
     </div>
 
     @include('admin.products._form')
+
+<!--    <div class="form-group ">
+        {!! Form::label('tags', 'Tag:') !!}
+        {!! Form::text('tags', $tags, ['class' => 'form-control']) !!}
+    </div>-->
      
      <div class="form-group">
          {!! Form::submit('Salva modifiche', ['class'=>'btn btn-primary']) !!}

@@ -2,103 +2,135 @@
 
 namespace CodeCommerce\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
-
-//importa
-use CodeCommerce\Product;
-use CodeCommerce\Category;
-use CodeCommerce\ProductImage;
-use CodeCommerce\Http\Controllers\Controller;
-use CodeCommerce\Http\Requests\ProductRequest;
-use CodeCommerce\Http\Requests\ProductImageRequest;
-
+use CodeCommerce\Http\Requests\ProductsRequest;
+use CodeCommerce\Repositories\AdminCategoriesRepository;
+use CodeCommerce\Repositories\AdminProductsRepository;
+use CodeCommerce\Services\AdminProductsService;
 
 class AdminProductsController extends Controller
-{    
-    private $products;
-        
-    public function __construct(Product $product){
-        $this->products = $product;
+{
+    private $productsRepository;
+
+    private $productsServices;
+
+    /**
+     * Construct
+     *
+     * @param AdminProductsRepository $productsRepository
+     * @param AdminProductsService $productsServices
+     */
+    public function  __construct(AdminProductsRepository $productsRepository, AdminProductsService $productsServices)
+    {
+        $this->productsRepository = $productsRepository;
+        $this->productsServices = $productsServices;
     }
-      
-    public function index(){
-        $products = $this->products->paginate(5);
-        return view('admin.products.index', compact('products'));
+
+    /**
+     * Show products all.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        $products = $this->productsRepository->paginate(10);
+
+        return view('products.index', compact('products'));
     }
-    
-    public function create(Category $category){ 
-        $categories = $category->lists('name', 'id'); 
-        return view('admin.products.create', compact('categories'));
+
+    /**
+     * Show products.
+     *
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $products_id = $this->productsRepository->find($id);
+
+        return view('products.show', compact('products_id'));
     }
-    
-    public function store(ProductRequest $request){
-        $this->products->create($request->all());
-        return redirect()->route('a.p.index');
+
+    /**
+     * Show images product
+     *
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function showImages($id)
+    {
+        $product = $this->productsRepository->find($id);
+
+        return view('products.images', compact('product'));
     }
-    
-    public function edit($id){
-        $product = $this->products->find($id);
-        return view('admin.products.edit', compact('product, categories'));
+
+    /**
+     * Create products.
+     *
+     * @param AdminCategoriesRepository $categoryRepository
+     * @return \Illuminate\View\View
+     */
+    public function create(AdminCategoriesRepository $categoryRepository)
+    {
+        $categories = $categoryRepository->lists('name', 'id');
+
+        return view('products.create', compact('categories'));
     }
-    
-    public function update($id, ProductRequest $request){
-        $this->products->find($id)->update($request->all());
-        return redirect()->route('a.p.index');
+
+    /**
+     * Stores the data in the database
+     *
+     * @param ProductsRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(ProductsRequest $request)
+    {
+        $this->productsServices->insert($request);
+
+        return redirect()->route('products');
     }
-    
-    public function destroy($id){         
-        $product = $this->products->find($id);
-        
-        if($product){
-            if($product->images){
-                foreach($product->images as $image){
-                    if(file_exists(public_path().'/uploads/'.$image->id.'.'.$image->extension)){
-                        Storage::disk('public_local')->delete($image->id.'.'.$image->extension);
-                    }
-                    $image->delete();
-                }
-            }
-            $product->delete();
-            return redirect()->route('a.p.index');
-        }
-        return redirect()->route('a.p.index');   
+
+    /**
+     * Edit Products
+     *
+     * @param AdminCategoriesRepository $categoryRepository
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function edit(AdminCategoriesRepository $categoryRepository, $id)
+    {
+        $categories = $categoryRepository->lists('name', 'id');
+
+        $products_id = $this->productsRepository->find($id);
+
+        return view('products.edit', compact('products_id', 'categories'));
     }
-    
-    public function images($id){
-        $product = $this->products->find($id);
-        return view('admin.products.images.images', compact('product'));
+
+    /**
+     * Update Products
+     *
+     * @param ProductsRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(ProductsRequest $request, $id)
+    {
+        $this->productsRepository->find($id)->update($request->all());
+
+        $this->productsServices->update($request, $id);
+
+        return redirect()->route('products');
     }
-    
-    public function createImage($id){
-        $product = $this->products->find($id);
-        return view('admin.products.images.create_image', compact('product'));
-    }
-    
-    public function storeImage(ProductImageRequest $request, $id, ProductImage $productImage){
-        $file = $request->file('image');
-        $extension = $file->getClientOriginalExtension();
-        
-        $image = $productImage::create(['product_id'=>$id, 'extension'=>$extension]);
-        Storage::disk('public_local')->put($image->id.'.'.$extension, File::get($file));
-        
-        return redirect()->route('a.p.i.index', ['id'=>$id]);
-    }
-    
-    public function destroyImage($id, ProductImage $productImage){ 
-        $image = $productImage->find($id);
-        
-        if(file_exists(public_path() . '/upload'.$image->id.'.'.$image->extension)){
-            Storage::disk('public_local')->delete($image->id.'.'.$image->extension);   
-        }
-        
-        
-        $product = $image->product;
-        $image->delete();
-        
-        return redirect()->route('a.p.i.index', ['id'=>$product->id]);
+
+    /**
+     * Delete Products and images related
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        $this->productsServices->delete($id);
+
+        return redirect()->route('products');
     }
 }
-
-
